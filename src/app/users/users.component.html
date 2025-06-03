@@ -1,0 +1,50 @@
+<div class="users-container">
+  <div class="users-header">
+    <h2>Users Management</h2>
+    <div class="search-box">
+      <input 
+        type="text"
+        [(ngModel)]="search"
+        (input)="onSearch()"
+        placeholder="Search users by email..."
+      >
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="toggleSort()" class="sortable">
+            User ID 
+            <div class="sort-icons">
+              <span class="arrow up" [class.active]="sortDirection === 'asc'">↑</span>
+              <span class="arrow down" [class.active]="sortDirection === 'desc'">↓</span>
+            </div>
+          </th>
+          <th>Email Address</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.id}}</td>
+          <td>{{user.email}}</td>
+          <td><span class="role-badge">{{user.role}}</span></td>
+        </tr>
+        <tr *ngIf="users.length === 0">
+          <td colspan="3" class="table-empty">No users found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button 
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      [class.active]="page === i+1"
+      (click)="goToPage(i+1)">
+      {{i + 1}}
+    </button>
+  </div>
+</div>
